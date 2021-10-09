@@ -255,21 +255,22 @@ class App extends Component {
   state = {
     score: 0,
     runningTime: 60,
-    displayedImage: '',
+    displayedImage: imagesList[0],
     showResults: false,
     activatedTab: tabsList[0].tabId,
   }
 
   componentDidMount() {
-    this.generateRandomNumber()
     this.runTimer()
   }
 
   onSelectThumbnail = id => {
     const {displayedImage} = this.state
     if (displayedImage.id === id) {
-      this.setState(prevState => ({score: prevState.score + 1}))
-      this.generateRandomNumber()
+      this.setState(
+        prevState => ({score: prevState.score + 1}),
+        this.generateRandomNumber(),
+      )
     } else {
       clearInterval(this.timer)
       this.setState({showResults: true})
@@ -282,6 +283,7 @@ class App extends Component {
       score: 0,
       runningTime: 60,
       showResults: false,
+      displayedImage: imagesList[0],
     })
   }
 
@@ -312,7 +314,7 @@ class App extends Component {
   }
 
   generateRandomNumber = () => {
-    const randomNumber = parseInt(Math.random() * 14)
+    const randomNumber = parseInt(Math.random() * 15)
     const generatedImage = imagesList[randomNumber]
     this.setState({displayedImage: generatedImage})
     console.log(randomNumber)
